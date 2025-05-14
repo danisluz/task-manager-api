@@ -1,10 +1,13 @@
+# Ignorar dependências e build
 node_modules
 dist
 coverage
-*.log
 .env
 Dockerfile
 Dockerfile.dev
 docker-compose.yml
+
+# Ignorar arquivos de configuração do editor
 .idea
 .vscode
+*.log

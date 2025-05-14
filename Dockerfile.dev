@@ -1,0 +1,21 @@
+# Dockerfile.dev
+
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Instalar o NestJS globalmente
+RUN npm install -g @nestjs/cli
+
+# Instalar as dependências
+COPY package*.json ./
+RUN npm install
+
+# Copiar os arquivos de configuração e código
+COPY . .
+
+# Expor a porta da aplicação
+EXPOSE 3000
+
+# Rodar o serviço em modo de desenvolvimento com nodemon
+CMD ["npm", "run", "start:dev"]
