@@ -1,6 +1,6 @@
 version: '3.9'
 services:
-  api:
+  task-manager-api:
     container_name: task-manager-api
     build:
       context: .
@@ -13,3 +13,20 @@ services:
     environment:
       - NODE_ENV=development
       - TZ=America/Sao_Paulo
+      - DATABASE_URL=postgresql://admin:admin@task-manager-db:5432/taskdb
+
+  task-manager-db:
+    image: postgres:15-alpine
+    container_name: task-manager-db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: taskdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
