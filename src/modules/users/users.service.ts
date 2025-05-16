@@ -84,7 +84,7 @@ export class UsersService {
           email,
           password: hashedPassword,
           roles: roleIds?.length ? {
-            deleteMany: {},  // Remove todas as roles anteriores
+            deleteMany: {},
             create: roleIds.map((roleId) => ({
               role: { connect: { id: roleId } },
             })),
