@@ -5,7 +5,6 @@ async function bootstrap(): Promise<void> {
   try {
     const app = await NestFactory.create(AppModule);
 
-    // CORS
     app.enableCors();
 
     const port = process.env.PORT || 3000;
