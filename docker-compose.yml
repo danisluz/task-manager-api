@@ -1,33 +1,38 @@
 version: '3.9'
 services:
-  task-manager-api:
-    container_name: task-manager-api
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    ports:
-      - "3000:3000"
-      - "5555:5555" # Porta do Prisma Studio
-    volumes:
-      - ./:/app
-      - /app/node_modules
-    environment:
-      - NODE_ENV=development
-      - TZ=America/Sao_Paulo
-      - DATABASE_URL=postgresql://admin:admin@task-manager-db:5432/taskdb
-
   task-manager-db:
-    image: postgres:15-alpine
+    image: postgres:15
     container_name: task-manager-db
     restart: always
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: taskdb
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  task-manager-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: task-manager-api
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - JWT_SECRET=${JWT_SECRET}
+      - DATABASE_URL=${DATABASE_URL}
+      - PORT=${PORT}
+      - SUPERUSER_EMAIL=${SUPERUSER_EMAIL}
+      - SUPERUSER_PASSWORD=${SUPERUSER_PASSWORD}
+    depends_on:
+      - task-manager-db
+    volumes:
+      - .:/app
+      - /app/node_modules
 
 volumes:
   postgres_data:
