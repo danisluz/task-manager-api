@@ -44,6 +44,11 @@ O Task Manager é um projeto backend desenvolvido com NestJS, Prisma e PostgreSQ
 
    ```bash
    DATABASE_URL=postgresql://admin:admin@task-manager-db:5432/taskdb
+   JWT_SECRET="superSecretKey"
+   NODE_ENV="development"
+   PORT=3000
+   SUPERUSER_EMAIL=admin@system.com
+   SUPERUSER_PASSWORD=123456
    ```
 
 ---
@@ -61,30 +66,28 @@ O Task Manager é um projeto backend desenvolvido com NestJS, Prisma e PostgreSQ
    ```bash
    docker exec -it task-manager-api sh
    npx prisma migrate dev --name init
+   npx prisma db seed
    ```
 
 3. Acesse a aplicação no navegador:
 
-   ```
-   ```
-
-[http://localhost:3000](http://localhost:3000)
-
-````
+   [http://localhost:3000](http://localhost:3000)
 
 ---
 
 ## 🛠️ Rodando a Aplicação (Produção)
+
 1. Gere o build da aplicação:
+
 ```bash
 npm run build
-````
+```
 
 2. Suba os containers em modo produção:
 
-   ```bash
-   docker-compose -f docker-compose.prod.yml up --build
-   ```
+```bash
+docker-compose -f docker-compose.prod.yml up --build
+```
 
 ---
 
@@ -99,6 +102,11 @@ npm run build
 
   ```bash
   npx prisma migrate dev --name init
+  ```
+* Rodar seeds:
+
+  ```bash
+  npx prisma db seed
   ```
 * Acessar o Prisma Studio:
 
