@@ -11,12 +11,27 @@ import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Post()
+  @ApiOperation({ summary: 'Criar uma nova tarefa' })
+  @ApiBody({
+    type: CreateTaskDto,
+    description: 'Dados para criação da tarefa',
+    schema: {
+      example: {
+        title: 'Título da Terafa',
+        description: 'Descrição da tarefa',
+        done: false,
+        userId: 'UUID do usuário que pertence essa tarefa'
+      },
+    },
+  })
+  @ApiResponse({ status: 201, description: 'Tarefa criada com sucesso' })
   async create(@Body() createTaskDto: CreateTaskDto) {
     return await this.tasksService.create(createTaskDto);
   }
