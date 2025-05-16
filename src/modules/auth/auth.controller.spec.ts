@@ -44,7 +44,6 @@ describe('AuthController', () => {
     authService = module.get<AuthService>(AuthService);
     usersService = module.get<UsersService>(UsersService);
 
-    // Mockando o bcrypt para sempre retornar true na comparação
     jest.spyOn(bcrypt, 'compare').mockImplementation(async () => true);
   });
 
